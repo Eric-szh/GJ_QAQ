@@ -1,0 +1,82 @@
+# Unity (place at repo root)
+
+# OS / Editor temp
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Unity generated folders (do NOT commit)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+.utmp/
+
+# Large captures / recordings
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDEs
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.tmp
+*.pidb
+*.booproj
+*.svd
+*.VC.db
+*.opendb
+*.DotSettings.user
+
+# Gradle
+.gradle/
+
+# Auto-generated solution/project files (Unity will regenerate)
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.pdb
+*.mdb
+
+# Crash reports
+sysinfo.txt
+mono_crash.*
+
+# Unity generated meta for debug artifacts
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Builds / packages (usually not committed)
+*.apk
+*.aab
+*.app
+*.unitypackage
+*.unitypackage.meta
+
+# Addressables defaults
+/ServerData
+/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/AddressableAssetsData/link.xml*
+/[Aa]ssets/Addressables_Temp*
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+
+# Visual Scripting auto-generated
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+# JetBrains Rider plugin (auto-generated)
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Optional: Asset Store Tools (uncomment if you don't want it tracked)
+# /[Aa]ssets/AssetStoreTools*

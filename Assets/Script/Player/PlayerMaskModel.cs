@@ -41,7 +41,7 @@ public class PlayerMaskModel : MonoBehaviour
         if (pickupID / 100 == 1)
         {
             maskGot.Add(pickupID);
-            // TODO: update maskview
+            // TODO: update invmaskview
         }
         else if (pickupID / 100 == 2)
         {
@@ -64,5 +64,38 @@ public class PlayerMaskModel : MonoBehaviour
             maskGot.Remove(itemID);
             // TODO: update itemview
         }
+    }
+
+    public void useMask(int slot)
+    {
+        // use the mask at the slot position
+        if (slot < 0 || slot >= maskGot.Count)
+        {
+            return;
+        }
+
+        int maskGoingToEquip = maskGot[slot];
+        // if the mask is already equiped, took it off
+        if (maskEquiped == maskGoingToEquip)
+        {
+            maskEquiped = 000;
+        }
+        else
+        {
+            maskEquiped = maskGoingToEquip;
+        }
+
+        // TODO: update invmaskview selection
+        // TODO: update actual mask in player maskview
+    }
+
+    public bool checkMaskOn(int maskid)
+    {
+        return maskEquiped == maskid;
+    }
+
+    public bool checkHaveItem(int itemid)
+    {
+        return itemGot.Contains(itemid);
     }
 }

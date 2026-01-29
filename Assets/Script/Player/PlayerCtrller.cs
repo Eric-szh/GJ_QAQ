@@ -54,11 +54,11 @@ public class PlayerCtrller : MonoBehaviour
         if (moveInput != Vector2.zero)
         {
             ChangeFaceDirection(moveInput);
-            GetComponent<AniController>().ChangeAnimationState(idleAnimationName);
+            GetComponent<AniController>().ChangeAnimationState(walkAnimationName);
         }
         else
         {
-            GetComponent<AniController>().ChangeAnimationState(walkAnimationName);
+            GetComponent<AniController>().ChangeAnimationState(idleAnimationName);
         }
 
         if (_interactAction.WasPressedThisFrame())

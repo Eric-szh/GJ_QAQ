@@ -80,3 +80,4 @@ mono_crash.*
 
 # Optional: Asset Store Tools (uncomment if you don't want it tracked)
 # /[Aa]ssets/AssetStoreTools*
+/Assets/_Recovery

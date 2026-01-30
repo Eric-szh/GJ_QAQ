@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimalController : MonoBehaviour
 {
     [Header("Animation")]
     public string idleAniName = "Idle";
     public string correctAniName = "Correct";
+    public UnityEvent rightAniFinished; // event triggered when correct animation finishes
 
     [Header("References")]
     public BubbleAppear bubble;   // reference to the BubbleAppear script on the bubble GameObject
@@ -48,13 +50,10 @@ public class AnimalController : MonoBehaviour
     // Called by ItemInteract / MaskInteract when the player is correct
     public void Right()
     {
-        if (_ani != null)
-        {   
-            //if now animation directly droppickup
-            DropPickUp();
-            // or play animation then drop pickup
-            //_ani.ChangeAnimationState(correctAniName, false);
-            // The correct animation should include an Animation Event that calls DropPickUp()
+        if (_ani != null) {
+
+            _ani.ChangeAnimationState(correctAniName, false);
+         
         }
         else
         {
@@ -67,5 +66,10 @@ public class AnimalController : MonoBehaviour
     {
         if (pickup != null)
             pickup.SetActive(true);
+    }
+
+    public void CorrectAniFinished()
+    {
+        rightAniFinished?.Invoke();
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElephantInvView : MonoBehaviour
+public class InventoryItemView : MonoBehaviour
 {
     [Serializable]
     public class ItemDef

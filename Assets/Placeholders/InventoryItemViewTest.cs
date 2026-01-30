@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ElephantInvViewTester : MonoBehaviour
 {
-    [SerializeField] private ElephantInvView view;
+    [SerializeField] private InventoryItemView view;
 
     private Keyboard kb;
 

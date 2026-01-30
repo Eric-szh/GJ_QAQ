@@ -30,13 +30,15 @@ public class SoundManager : MonoBehaviour
     private readonly Dictionary<int, AudioClip> soundDict = new Dictionary<int, AudioClip>();
 
     // Dict of all going-on audio sources:
-    // (id playing -> entry { source, isLooping, paused })
+    // (id playing -> entry { source, isLooping, paused, onCompleted })
     private class PlayingEntry
     {
         public int id;
         public AudioSource source;
         public bool looping;
         public bool paused;
+
+        public Action onCompleted; // NEW: optional callback when finished (non-looping natural completion)
     }
     private readonly Dictionary<int, PlayingEntry> playingDict = new Dictionary<int, PlayingEntry>();
 
@@ -125,7 +127,8 @@ public class SoundManager : MonoBehaviour
     // If same id already playing:
     // - restartIfAlreadyPlaying = true  => replay (default)
     // - restartIfAlreadyPlaying = false => do nothing
-    public void PlaySound(int id, bool loop, bool restartIfAlreadyPlaying = true)
+    // NEW: optional onCompleted callback invoked ONLY when non-looping sound finishes naturally.
+    public void PlaySound(int id, bool loop, Action onCompleted = null, bool restartIfAlreadyPlaying = true)
     {
         if (!soundDict.TryGetValue(id, out var clip) || clip == null)
         {
@@ -141,6 +144,8 @@ public class SoundManager : MonoBehaviour
 
             existing.looping = loop;
             existing.paused = false;
+            existing.onCompleted = onCompleted; // NEW: update callback for this play
+
             existing.source.loop = loop;
             existing.source.clip = clip;
 
@@ -163,7 +168,8 @@ public class SoundManager : MonoBehaviour
             id = id,
             source = src,
             looping = loop,
-            paused = false
+            paused = false,
+            onCompleted = onCompleted // NEW: store callback
         };
     }
 
@@ -227,6 +233,19 @@ public class SoundManager : MonoBehaviour
             // Non-looping finished: isPlaying becomes false after completion
             if (!entry.looping && !entry.source.isPlaying)
             {
+                // NEW: invoke callback on natural completion (non-looping)
+                if (entry.onCompleted != null)
+                {
+                    try
+                    {
+                        entry.onCompleted.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                    }
+                }
+
                 ReleaseSource(entry.source);
                 tempRemoveIds.Add(kv.Key);
             }

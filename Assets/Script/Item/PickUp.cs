@@ -10,7 +10,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] private int itemId;
     [SerializeField] private string title;
     [SerializeField, TextArea(2, 6)] private string description;
-
+    [SerializeField] private int taskID = -1; // optional task ID to complete upon pickup
     
     [SerializeField] private Sprite fallbackIcon;
 
@@ -49,6 +49,12 @@ public class Pickup : MonoBehaviour
         if (maskmodel != null)
         maskmodel.getPickup(itemId);
 
+        if (taskID != -1 && TaskList.Instance != null)
+        {
+            TaskList.Instance.CompleteTask(taskID);
+        }
+
         Destroy(gameObject);
+
     }
 }

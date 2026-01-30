@@ -8,6 +8,11 @@ public class PlayerCtrller : MonoBehaviour
     private InputActionMap _playerMap;
     private InputAction _moveAction;
     private InputAction _interactAction;
+    private InputAction _hotbar1;
+    private InputAction _hotbar2;
+    private InputAction _hotbar3;
+    private InputAction _hotbar4;
+    private InputAction _hotbar5;
 
     private bool actionFreeze = false;
 
@@ -22,6 +27,13 @@ public class PlayerCtrller : MonoBehaviour
     public string idleAnimationName = "None";
     public string walkAnimationName = "None";
 
+    public PlayerMaskModel _playerMaskModel;
+
+    private void Reset()
+    {
+        _playerMaskModel = FindFirstObjectByType<PlayerMaskModel>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +41,11 @@ public class PlayerCtrller : MonoBehaviour
         _playerMap = playerInputAction.FindActionMap("Player");
         _moveAction = _playerMap.FindAction("Move");
         _interactAction = _playerMap.FindAction("Interact");
+        _hotbar1 = _playerMap.FindAction("Hotbar1");
+        _hotbar2 = _playerMap.FindAction("Hotbar2");
+        _hotbar3 = _playerMap.FindAction("Hotbar3");
+        _hotbar4 = _playerMap.FindAction("Hotbar4");
+        _hotbar5 = _playerMap.FindAction("Hotbar5");
 
         E?.SetActive(false);
 
@@ -64,6 +81,24 @@ public class PlayerCtrller : MonoBehaviour
         if (_interactAction.WasPressedThisFrame())
             OnInteract();
 
+        if (_hotbar1.WasPressedThisFrame())
+        {
+            _playerMaskModel.useMask(0);
+        } else if (_hotbar2.WasPressedThisFrame())
+        {
+            _playerMaskModel.useMask(1);
+        } else if (_hotbar3.WasPressedThisFrame())
+        {
+            _playerMaskModel.useMask(2);
+        } else if (_hotbar4.WasPressedThisFrame())
+        {
+            _playerMaskModel.useMask(3);
+        } else if (_hotbar5.WasPressedThisFrame())
+        {
+            _playerMaskModel.useMask(4);
+        }
+
+
         // Show or hide the E prompt based on whether there is a current interactable
         if (currentInteractable != null)
         {
@@ -88,6 +123,11 @@ public class PlayerCtrller : MonoBehaviour
         currentInteractable = interactable;
         Debug.Log("Set current interactable to " + (interactable != null ? interactable.ToString() : "null"));
 
+    }
+
+    public void LogText(string text)
+    {
+        Debug.Log(text);
     }
 
     void OnInteract()

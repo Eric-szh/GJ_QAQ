@@ -18,12 +18,14 @@ public class InventoryMaskView : MonoBehaviour
     [Header("UI Slots (one row)")]
     [SerializeField] private List<Image> slotImages = new List<Image>();
 
-    // 每个 slot 的高亮图层（建议是 slot 的子物体 Image，平时隐藏）
-    // 数量最好和 slotImages 一样；如果你不想做多张，也可以改成 Outline/单个移动框
+    [Header("Slot Highlights (same count as slots)")]
     [SerializeField] private List<GameObject> slotHighlights = new List<GameObject>();
 
+    [Header("Empty Slot Fallback")]
+    [SerializeField] private Sprite emptySlotSprite;
+
     [Header("Behavior")]
-    [SerializeField] private bool hideEmptySlots = false; // true: 没有 mask 的 slot 直接隐藏 Image
+    [SerializeField] private bool hideEmptySlots = false; // true: empty slot hides Image component
 
     private readonly Dictionary<int, Sprite> spriteDict = new Dictionary<int, Sprite>();
 
@@ -37,7 +39,6 @@ public class InventoryMaskView : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        // Editor 里改了列表后，重新建字典（运行中不做）
         if (!Application.isPlaying)
             BuildDict();
     }
@@ -54,27 +55,44 @@ public class InventoryMaskView : MonoBehaviour
         }
     }
 
+    public void SetEmptySlotSprite(Sprite sprite)
+    {
+        emptySlotSprite = sprite;
+        // Optional: refresh current visuals if you want immediate effect
+        // ClearAllSlots();
+    }
+
+    private void ApplyEmptySlot(Image img)
+    {
+        if (img == null) return;
+
+        if (hideEmptySlots)
+        {
+            img.sprite = null;
+            img.enabled = false;
+            return;
+        }
+
+        img.sprite = emptySlotSprite; // can be null, that's fine
+        img.enabled = true;           // show Image even if sprite is null
+        img.color = Color.white;
+    }
+
     private void ClearAllSlots()
     {
         for (int i = 0; i < slotImages.Count; i++)
         {
-            var img = slotImages[i];
-            if (img == null) continue;
-
-            img.sprite = null;
-            img.enabled = !hideEmptySlots; // hideEmptySlots=true => enabled=false
-            img.color = Color.white;
+            ApplyEmptySlot(slotImages[i]);
         }
     }
 
-    // Public updateView(int[] masklist)
-    // maskList: 例如 [100, 101, 102]
+    // maskList: e.g. [100, 101, 102]
     public void UpdateView(int[] maskList)
     {
         if (slotImages == null || slotImages.Count == 0)
             return;
 
-        // 先清空
+        // Reset all slots to empty state first
         ClearAllSlots();
 
         if (maskList == null) return;
@@ -82,25 +100,24 @@ public class InventoryMaskView : MonoBehaviour
         int count = Mathf.Min(maskList.Length, slotImages.Count);
         for (int i = 0; i < count; i++)
         {
-            int id = maskList[i];
             var img = slotImages[i];
             if (img == null) continue;
 
+            int id = maskList[i];
             if (spriteDict.TryGetValue(id, out var sp) && sp != null)
             {
                 img.sprite = sp;
-                img.enabled = true; // 有内容就显示
+                img.enabled = true;
+                img.color = Color.white;
             }
             else
             {
-                // 找不到 sprite：保持空
-                img.sprite = null;
-                img.enabled = !hideEmptySlots;
+                // Missing sprite or unknown id -> treat as empty slot
+                ApplyEmptySlot(img);
             }
         }
     }
 
-    // Public updateSelection(int slot)
     // slot: -1 => highlight nothing
     public void UpdateSelection(int slot)
     {
@@ -112,17 +129,6 @@ public class InventoryMaskView : MonoBehaviour
             var hl = slotHighlights[i];
             if (hl == null) continue;
             hl.SetActive(i == slot);
-        }
-
-        // slot = -1 时，上面循环不会命中任何 i==slot，等价于全部 SetActive(false)
-        if (slot < 0)
-        {
-            for (int i = 0; i < slotHighlights.Count; i++)
-            {
-                var hl = slotHighlights[i];
-                if (hl == null) continue;
-                hl.SetActive(false);
-            }
         }
     }
 }

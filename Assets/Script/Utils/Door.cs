@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
         bubble.Appear();
     }
 
-    void Right()
+    public void Right()
     {
         GetComponent<SpriteRenderer>().sprite = openSprite;
         onOpen.Invoke();

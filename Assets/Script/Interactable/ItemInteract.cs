@@ -17,6 +17,7 @@ public class ItemInteract : EventInteract
     {
         if (maskModel.checkHaveItem(itemID))
         {
+            maskModel.loseItem(itemID);
             return base.AcutalInteract();
         }
         else

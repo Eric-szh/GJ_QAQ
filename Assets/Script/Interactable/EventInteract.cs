@@ -41,13 +41,11 @@ public class EventInteract : MonoBehaviour, IInteractable
     {
         if (other.gameObject == playerCtrl.gameObject)
         {
-            if (invokeOnlyOnce && !hasBeenInvoked)
+            if (invokeOnlyOnce && hasBeenInvoked)
             {
-                playerCtrl.SetCurrentInteractable(this);
+                return;
             }
-            else
-            {
-                playerCtrl.SetCurrentInteractable(this);
+            playerCtrl.SetCurrentInteractable(this);
             // if it have higlight, change sprite to hightlight
             if (hightlight != null)
             {
@@ -58,11 +56,11 @@ public class EventInteract : MonoBehaviour, IInteractable
                     sr.sprite = hightlight;
                 }
             }
-            }
         }
+    }
 
         
-    }
+    
 
     private void OnTriggerExit2D(Collider2D other)
     {

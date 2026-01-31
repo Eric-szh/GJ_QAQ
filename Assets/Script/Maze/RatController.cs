@@ -47,6 +47,11 @@ public class RatController : MonoBehaviour
             rb.position = currNode.Pos2D;
     }
 
+    private void OnEnable()
+    {
+        Start();
+    }
+
     void Update()
     {
         UpdateKeyTimes();

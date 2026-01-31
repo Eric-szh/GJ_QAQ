@@ -19,6 +19,17 @@ public class PlayerMaskModel : MonoBehaviour
     [SerializeField] private int debugPickupId = 100; // 比如 1xx 是 mask，2xx 是 item
     [SerializeField] private bool debugIgnoreAlreadyPicked = true;
 
+    [Header("Mask Sound bind")]
+    public List<MaskSoundBind> maskSoundBinds;
+    [Serializable]
+    public struct MaskSoundBind
+    {
+        public int maskID;
+        public int soundID;
+    }
+
+    private Dictionary<int, int> maskSoundDict;
+
     private void Reset()
     {
         invMaskView = FindFirstObjectByType<InventoryMaskView>();
@@ -36,6 +47,19 @@ public class PlayerMaskModel : MonoBehaviour
         maskGot = new List<int>();
         itemPickuped = new List<int>();
 
+        // build dictionary for mask sound binds
+        maskSoundDict = new Dictionary<int, int>();
+        foreach (var bind in maskSoundBinds)
+        {
+            if (!maskSoundDict.ContainsKey(bind.maskID))
+            {
+                maskSoundDict.Add(bind.maskID, bind.soundID);
+            } 
+            else
+            {
+                Debug.LogWarning("Duplicate maskID in maskSoundBinds: " + bind.maskID);
+            }
+        }
     }
 
     public void getPickup(int pickupID)
@@ -74,8 +98,9 @@ public class PlayerMaskModel : MonoBehaviour
 
         if (itemGot.Contains(itemID))
         {
-            maskGot.Remove(itemID);
+            itemGot.Remove(itemID);
             itemView.UpdateView(itemGot.ToArray());
+            Debug.Log("Lost item: " + itemID);
         }
     }
 
@@ -97,6 +122,10 @@ public class PlayerMaskModel : MonoBehaviour
         else
         {
             maskEquiped = maskGoingToEquip;
+            if (maskSoundDict != null && maskSoundDict.TryGetValue(maskEquiped, out int soundID))
+            {
+                SoundManager.Instance.PlaySound(soundID, false);
+            }
         }
 
         // TODO: update invmaskview selection

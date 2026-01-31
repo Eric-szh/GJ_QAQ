@@ -7,6 +7,7 @@ public class AnimalController : MonoBehaviour
     public string idleAniName = "Idle";
     public string correctAniName = "Correct";
     public UnityEvent rightAniFinished; // event triggered when correct animation finishes
+    public UnityEvent onDropPickup;
 
     [Header("References")]
     public BubbleAppear bubble;   // reference to the BubbleAppear script on the bubble GameObject
@@ -66,6 +67,8 @@ public class AnimalController : MonoBehaviour
     {
         if (pickup != null)
             pickup.SetActive(true);
+
+        onDropPickup?.Invoke();
     }
 
     public void CorrectAniFinished()

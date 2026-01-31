@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
 
     // Pool of reusable AudioSources (free sources not currently assigned)
     private readonly List<AudioSource> freeSources = new List<AudioSource>();
-
+    private readonly List<Action> tempCallbacks = new List<Action>(); 
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -211,7 +211,7 @@ public class SoundManager : MonoBehaviour
     // Public update()
     // Loop through all audio sources:
     // If a sound finished playing and not looping: stop and empty it
-    private void Update()
+    /*private void Update()
     {
         if (playingDict.Count == 0) return;
 
@@ -254,6 +254,49 @@ public class SoundManager : MonoBehaviour
         for (int i = 0; i < tempRemoveIds.Count; i++)
         {
             playingDict.Remove(tempRemoveIds[i]);
+        }
+    }*/
+
+    private void Update()
+    {
+        if (playingDict.Count == 0) return;
+
+        tempRemoveIds.Clear();
+        tempCallbacks.Clear();
+
+        foreach (var kv in playingDict)
+        {
+            var entry = kv.Value;
+            if (entry == null || entry.source == null)
+            {
+                tempRemoveIds.Add(kv.Key);
+                continue;
+            }
+
+            if (entry.paused) continue;
+
+            if (!entry.looping && !entry.source.isPlaying)
+            {
+                // 先缓存回调，别在 foreach 里调用
+                if (entry.onCompleted != null)
+                {
+                    tempCallbacks.Add(entry.onCompleted);
+                    entry.onCompleted = null; // 防止重复调用
+                }
+
+                ReleaseSource(entry.source);
+                tempRemoveIds.Add(kv.Key);
+            }
+        }
+
+        for (int i = 0; i < tempRemoveIds.Count; i++)
+            playingDict.Remove(tempRemoveIds[i]);
+
+        // 现在才执行回调：回调里 PlaySound 修改字典也安全
+        for (int i = 0; i < tempCallbacks.Count; i++)
+        {
+            try { tempCallbacks[i]?.Invoke(); }
+            catch (Exception ex) { Debug.LogException(ex); }
         }
     }
 

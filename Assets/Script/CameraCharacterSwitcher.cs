@@ -13,6 +13,9 @@ public class CameraCharacterSwitcher : MonoBehaviour
     [Header("Singleton Options")]
     [SerializeField] private bool dontDestroyOnLoad = true;
 
+    [Header("Inv Ui")]
+    [SerializeField] private GameObject inventoryUI;
+
     private void Awake()
     {
         // Singleton guard
@@ -60,6 +63,19 @@ public class CameraCharacterSwitcher : MonoBehaviour
         for (int i = 0; i < characters.Length; i++)
         {
             if (characters[i] != null) characters[i].SetActive(i == cameraIndex);
+        }
+
+        // if switch to carema index 2 and 1, hide inventory UI
+        if (inventoryUI != null)
+        {
+            if (cameraIndex == 2 || cameraIndex == 1)
+            {
+                inventoryUI.SetActive(false);
+            }
+            else
+            {
+                inventoryUI.SetActive(true);
+            }
         }
     }
 }

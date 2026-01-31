@@ -6955,6 +6955,7 @@ MonoBehaviour:
   - {fileID: 485883385}
   - {fileID: 283712115}
   dontDestroyOnLoad: 1
+  inventoryUI: {fileID: 857801866}
 --- !u!1 &924598519
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,25 +6,27 @@ public class RatController : MonoBehaviour
 {
     public float speed = 4f;
 
-    public Vector2 MoveDirWorld { get; private set; } = Vector2.right; // 当前运动方向（世界坐标）
-    public bool IsBackingUp { get; private set; } = false;             // 是否在后退
+    public Vector2 MoveDirWorld { get; private set; } = Vector2.right;
+    public bool IsBackingUp { get; private set; } = false;
 
     [Header("Graph")]
     public PathNode startNode;
     public float nodeArriveRadius = 0.06f;
 
     [Header("Direction matching")]
-    [Range(-1f, 1f)] public float acceptDot = 0.7f;          // 节点选边时：方向匹配阈值（直角路口可用 0.7~0.9）
-    [Range(-1f, 1f)] public float moveAlignThreshold = 0.7f; // 边上推进时：输入必须沿线段方向（直角路口可用 0.7~0.9）
+    [Range(-1f, 1f)] public float acceptDot = 0.7f;
+    [Range(-1f, 1f)] public float moveAlignThreshold = 0.7f;
+
+    [Header("Pre-turn snap")]
+    public float preTurnRadius = 0.15f; // 接近节点时允许提前拐弯吸附
 
     Rigidbody2D rb;
 
     PathNode prevNode;
     PathNode currNode;
     PathNode nextNode;
-    float edgeT; // 0..1 在 curr->next 上的位置
+    float edgeT;
 
-    // 记录按键最近按下时间（用于“新按下优先”）
     float tW = -1f, tA = -1f, tS = -1f, tD = -1f;
 
     void Awake()
@@ -54,7 +56,7 @@ public class RatController : MonoBehaviour
     {
         if (!currNode) return;
 
-        // 没有目标边：在节点处等待输入并选边
+        // 在节点处：等待输入选边
         if (!nextNode)
         {
             if (AnyMoveKeyPressed())
@@ -62,11 +64,11 @@ public class RatController : MonoBehaviour
                 nextNode = ChooseNextAtNode(currNode, prevNode);
                 edgeT = 0f;
             }
+
+            MoveDirWorld = Vector2.zero;
+            IsBackingUp = false;
             return;
         }
-
-        // 边中间可停：没按键就不推进
-        if (!AnyMoveKeyPressed()) return;
 
         Vector2 a = currNode.Pos2D;
         Vector2 b = nextNode.Pos2D;
@@ -75,22 +77,71 @@ public class RatController : MonoBehaviour
 
         Vector2 edgeDir = (b - a).normalized;
 
-        // 只用“沿当前边方向/反方向”的按键来推进（垂直方向键可提前按着用于到节点转弯）
+        // ---------- 关键：即使停住，也允许“拐弯键 + 接近节点”触发吸附 ----------
+        if (AnyMoveKeyPressed())
+        {
+            Vector2 turnDir = GetTurnIntentDir(edgeDir); // 与当前边不一致的方向键（最新按下优先）
+            if (turnDir != Vector2.zero)
+            {
+                float distToA = Vector2.Distance(rb.position, a);
+                float distToB = Vector2.Distance(rb.position, b);
+
+                // 优先吸附更近的端点（通常你停在路口附近时会吸到B）
+                if (distToB <= preTurnRadius && distToB <= distToA + 1e-4f)
+                {
+                    // 吸到 nextNode（路口），然后立刻按当前按键选分支
+                    prevNode = currNode;
+                    currNode = nextNode;
+                    rb.position = currNode.Pos2D;
+
+                    nextNode = null;
+                    edgeT = 0f;
+
+                    nextNode = ChooseNextAtNode(currNode, prevNode);
+                    return;
+                }
+                else if (distToA <= preTurnRadius)
+                {
+                    // 吸到 currNode 端点（如果你在起点端附近想转）
+                    rb.position = currNode.Pos2D;
+
+                    nextNode = null;
+                    edgeT = 0f;
+
+                    nextNode = ChooseNextAtNode(currNode, prevNode);
+                    return;
+                }
+            }
+        }
+        // ---------- 关键结束 ----------
+
+        // 边中间可停：没按键不推进
+        if (!AnyMoveKeyPressed())
+        {
+            MoveDirWorld = Vector2.zero;
+            IsBackingUp = false;
+            return;
+        }
+
+        // 沿边推进（只接受沿边/反向沿边）
         float moveSign = GetMoveSignAlongEdge(edgeDir);
-        if (Mathf.Abs(moveSign) < 0.5f) return;
+        if (Mathf.Abs(moveSign) < 0.5f)
+        {
+            MoveDirWorld = Vector2.zero;
+            IsBackingUp = false;
+            return;
+        }
+
+        MoveDirWorld = (moveSign > 0f) ? edgeDir : -edgeDir;
+        IsBackingUp = (moveSign < 0f);
 
         float deltaT = (speed * Time.fixedDeltaTime) / len;
         edgeT = Mathf.Clamp01(edgeT + Mathf.Sign(moveSign) * deltaT);
 
         Vector2 pos = Vector2.Lerp(a, b, edgeT);
-
-
-
-
-
         rb.MovePosition(pos);
 
-        // 回到 currNode 端：清空 nextNode，允许立刻重新选（解决你说的“回头不能重新选”）
+        // 回到 currNode 端
         if (edgeT <= 0f + 1e-6f)
         {
             rb.position = currNode.Pos2D;
@@ -99,7 +150,7 @@ public class RatController : MonoBehaviour
             return;
         }
 
-        // 到达 nextNode 端：更新节点，清空 nextNode，然后立刻按当前按键选下一条（转弯优先逻辑在 ChooseNextAtNode）
+        // 到达 nextNode 端
         if (edgeT >= 1f - 1e-6f || Vector2.Distance(pos, b) <= nodeArriveRadius)
         {
             prevNode = currNode;
@@ -109,7 +160,6 @@ public class RatController : MonoBehaviour
             nextNode = null;
             edgeT = 0f;
 
-            // 如果仍按着键，立即选下一条边（不会在节点“顿一下”）
             if (AnyMoveKeyPressed())
                 nextNode = ChooseNextAtNode(currNode, prevNode);
 
@@ -117,7 +167,7 @@ public class RatController : MonoBehaviour
         }
     }
 
-    // -------- 输入：记录“是否按住 + 最近按下时间” --------
+    // ---------------- 输入：记录“是否按住 + 最近按下时间” ----------------
 
     void UpdateKeyTimes()
     {
@@ -131,7 +181,6 @@ public class RatController : MonoBehaviour
         if (kb.sKey.wasPressedThisFrame) tS = now;
         if (kb.dKey.wasPressedThisFrame) tD = now;
 
-        // 如果按住进入 Play 或焦点切换导致没触发 wasPressedThisFrame，补一次
         if (kb.wKey.isPressed && tW < 0f) tW = now;
         if (kb.aKey.isPressed && tA < 0f) tA = now;
         if (kb.sKey.isPressed && tS < 0f) tS = now;
@@ -145,14 +194,11 @@ public class RatController : MonoBehaviour
         return kb.wKey.isPressed || kb.aKey.isPressed || kb.sKey.isPressed || kb.dKey.isPressed;
     }
 
-    // 返回 +1 表示沿 edgeDir 正向走，-1 表示反向走，0 表示不走
     float GetMoveSignAlongEdge(Vector2 edgeDir)
     {
         var kb = Keyboard.current;
         if (kb == null) return 0f;
 
-        // 候选方向：只看四向按键
-        // 在“能沿边走”的候选中，选最适合的（同适合度时选最近按下的）
         float bestScore = -999f;
         float bestTime = -999f;
         float bestSign = 0f;
@@ -170,12 +216,11 @@ public class RatController : MonoBehaviour
     {
         if (!pressed) return;
 
-        float dot = Vector2.Dot(edgeDir, dir); // 正向>0，反向<0
+        float dot = Vector2.Dot(edgeDir, dir);
         float score = Mathf.Abs(dot);
 
-        if (score < moveAlignThreshold) return; // 不够沿边，就不用于推进
+        if (score < moveAlignThreshold) return;
 
-        // 先比“沿边程度”，再比“最近按下”
         if (score > bestScore + 1e-4f || (Mathf.Abs(score - bestScore) <= 1e-4f && time > bestTime))
         {
             bestScore = score;
@@ -184,7 +229,38 @@ public class RatController : MonoBehaviour
         }
     }
 
-    // -------- 节点选边：转弯优先于直走 --------
+    // 与当前边方向“不一致”的输入方向（用于提前拐弯）。返回最新按下且不沿边的方向
+    Vector2 GetTurnIntentDir(Vector2 edgeDir)
+    {
+        var kb = Keyboard.current;
+        if (kb == null) return Vector2.zero;
+
+        Vector2 best = Vector2.zero;
+        float bestTime = -999f;
+
+        void Consider(bool pressed, Vector2 dir, float time)
+        {
+            if (!pressed) return;
+
+            float d = Mathf.Abs(Vector2.Dot(edgeDir, dir));
+            if (d >= moveAlignThreshold) return; // 沿边，不算拐
+
+            if (time > bestTime)
+            {
+                bestTime = time;
+                best = dir;
+            }
+        }
+
+        Consider(kb.wKey.isPressed, Vector2.up, tW);
+        Consider(kb.aKey.isPressed, Vector2.left, tA);
+        Consider(kb.sKey.isPressed, Vector2.down, tS);
+        Consider(kb.dKey.isPressed, Vector2.right, tD);
+
+        return best;
+    }
+
+    // ---------------- 节点选边：转弯优先于直走 ----------------
 
     PathNode ChooseNextAtNode(PathNode node, PathNode from)
     {
@@ -193,7 +269,6 @@ public class RatController : MonoBehaviour
         Vector2 incomingDir = Vector2.zero;
         if (from) incomingDir = (node.Pos2D - from.Pos2D).normalized;
 
-        // 找“直走边”（最接近 incomingDir 的那条）。起点没有 from 时，直走概念不成立。
         PathNode straight = null;
         if (from)
         {
@@ -207,8 +282,6 @@ public class RatController : MonoBehaviour
             }
         }
 
-        // 根据“正在按住”的方向键，找可走的候选边
-        // 规则：如果存在 非直走 候选，则只在这些候选里选（转弯优先）；否则才选直走/其它
         PathNode bestTurn = null;
         float bestTurnTime = -999f;
         float bestTurnDot = -999f;
@@ -220,22 +293,33 @@ public class RatController : MonoBehaviour
         var kb = Keyboard.current;
         if (kb == null) return null;
 
-        EvaluateNodeCandidate(kb.wKey.isPressed, Vector2.up, tW, node, straight, ref bestTurn, ref bestTurnTime, ref bestTurnDot, ref bestAny, ref bestAnyTime, ref bestAnyDot);
-        EvaluateNodeCandidate(kb.aKey.isPressed, Vector2.left, tA, node, straight, ref bestTurn, ref bestTurnTime, ref bestTurnDot, ref bestAny, ref bestAnyTime, ref bestAnyDot);
-        EvaluateNodeCandidate(kb.sKey.isPressed, Vector2.down, tS, node, straight, ref bestTurn, ref bestTurnTime, ref bestTurnDot, ref bestAny, ref bestAnyTime, ref bestAnyDot);
-        EvaluateNodeCandidate(kb.dKey.isPressed, Vector2.right, tD, node, straight, ref bestTurn, ref bestTurnTime, ref bestTurnDot, ref bestAny, ref bestAnyTime, ref bestAnyDot);
+        EvaluateNodeCandidate(kb.wKey.isPressed, Vector2.up, tW, node, straight,
+            ref bestTurn, ref bestTurnTime, ref bestTurnDot,
+            ref bestAny, ref bestAnyTime, ref bestAnyDot);
+
+        EvaluateNodeCandidate(kb.aKey.isPressed, Vector2.left, tA, node, straight,
+            ref bestTurn, ref bestTurnTime, ref bestTurnDot,
+            ref bestAny, ref bestAnyTime, ref bestAnyDot);
+
+        EvaluateNodeCandidate(kb.sKey.isPressed, Vector2.down, tS, node, straight,
+            ref bestTurn, ref bestTurnTime, ref bestTurnDot,
+            ref bestAny, ref bestAnyTime, ref bestAnyDot);
+
+        EvaluateNodeCandidate(kb.dKey.isPressed, Vector2.right, tD, node, straight,
+            ref bestTurn, ref bestTurnTime, ref bestTurnDot,
+            ref bestAny, ref bestAnyTime, ref bestAnyDot);
 
         if (bestTurn != null) return bestTurn;
         return bestAny;
     }
 
-    void EvaluateNodeCandidate(bool pressed, Vector2 desiredDir, float keyTime, PathNode node, PathNode straight,
+    void EvaluateNodeCandidate(bool pressed, Vector2 desiredDir, float keyTime,
+                               PathNode node, PathNode straight,
                                ref PathNode bestTurn, ref float bestTurnTime, ref float bestTurnDot,
                                ref PathNode bestAny, ref float bestAnyTime, ref float bestAnyDot)
     {
         if (!pressed) return;
 
-        // 找“最符合 desiredDir 的邻居”
         PathNode best = null;
         float bestDot = -999f;
 
@@ -249,9 +333,8 @@ public class RatController : MonoBehaviour
 
         if (best == null || bestDot < acceptDot) return;
 
-        bool isTurn = (straight != null && best != straight); // 有 straight 的情况下，非 straight 就算“转弯”
+        bool isTurn = (straight != null && best != straight);
 
-        // 选择标准：优先“最近按下”，同时间戳再比 bestDot
         if (isTurn)
         {
             if (keyTime > bestTurnTime || (Mathf.Abs(keyTime - bestTurnTime) <= 1e-4f && bestDot > bestTurnDot))

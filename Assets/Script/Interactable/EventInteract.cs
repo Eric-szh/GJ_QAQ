@@ -39,9 +39,15 @@ public class EventInteract : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == playerCtrl.gameObject && !hasBeenInvoked)
+        if (other.gameObject == playerCtrl.gameObject)
         {
-            playerCtrl.SetCurrentInteractable(this);
+            if (invokeOnlyOnce && !hasBeenInvoked)
+            {
+                playerCtrl.SetCurrentInteractable(this);
+            }
+            else
+            {
+                playerCtrl.SetCurrentInteractable(this);
             // if it have higlight, change sprite to hightlight
             if (hightlight != null)
             {
@@ -52,7 +58,10 @@ public class EventInteract : MonoBehaviour, IInteractable
                     sr.sprite = hightlight;
                 }
             }
+            }
         }
+
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)

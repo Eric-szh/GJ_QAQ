@@ -37,7 +37,7 @@ public class EventInteract : MonoBehaviour, IInteractable
         return true;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject == playerCtrl.gameObject)
         {
@@ -59,10 +59,10 @@ public class EventInteract : MonoBehaviour, IInteractable
         }
     }
 
-        
-    
 
-    private void OnTriggerExit2D(Collider2D other)
+
+
+    protected void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject == playerCtrl.gameObject)
         {

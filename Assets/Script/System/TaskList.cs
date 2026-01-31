@@ -23,11 +23,11 @@ public class TaskList : MonoBehaviour
 
         _completedById = new Dictionary<int, bool>
         {
-            { 100, false },
-            { 101, false  },
-            { 102, false },
-            { 103, false  },
-            { 104, false }
+            { 400, false },
+            { 401, false  },
+            { 402, false },
+            { 403, false  },
+            { 404, false }
         };
     }
 
@@ -47,6 +47,7 @@ public class TaskList : MonoBehaviour
     {
         _completedById[taskID] = false;
         Debug.Log("Task " + taskID + " uncompleted.");
+        taskListChecks.RefreshAll();
     }
 
     public bool AllFinished()

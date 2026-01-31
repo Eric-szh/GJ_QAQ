@@ -67,6 +67,8 @@ public class PlayerCtrller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (actionFreeze) return;
+
         moveInput = _moveAction.ReadValue<Vector2>();
         moveInput = new Vector2(moveInput.x, 0f);
 
@@ -142,6 +144,11 @@ public class PlayerCtrller : MonoBehaviour
             // play hissing sound
             SoundManager.Instance.PlaySound(catHissSoundid, false);
         }
+    }
+
+    public void Juggle()
+    {
+        GetComponent<AniController>().ChangeAnimationState("Player_juggle");
     }
 
     void ChangeFaceDirection(Vector2 direction)

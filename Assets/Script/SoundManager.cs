@@ -58,6 +58,8 @@ public class SoundManager : MonoBehaviour
 
         BuildSoundDict();
         PrewarmPool(prewarmSources);
+
+        PlaySound(308, true, null, false);
     }
 
     private void BuildSoundDict()

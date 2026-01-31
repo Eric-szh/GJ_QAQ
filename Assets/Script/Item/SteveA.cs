@@ -21,14 +21,14 @@ public class SteveA : MonoBehaviour
     private Animator anim;
 
     [Header("Sound IDs")]
-    public int bootSfxId = 301;
-    public int wrongSfxId = 302;
+    public int bootSfxId ;
+    public int wrongSfxId ;
 
-    public int tvSfxId = 303;
-    public int tvAfterChangeSfxId = 304;   // 可选：0 表示不用
+    public int tvSfxId ;
+    public int tvAfterChangeSfxId ;   // 可选：0 表示不用
 
-    public int musicIntroSfxId = 305;
-    public int musicLoopSfxId = 306;       // 可选：0 表示用 intro 当 loop
+    public int musicIntroSfxId ;
+    public int musicLoopSfxId ;       // 可选：0 表示用 intro 当 loop
 
     private int seq = 0;
 
@@ -126,6 +126,7 @@ public class SteveA : MonoBehaviour
 
         int loopId = (musicLoopSfxId != 0) ? musicLoopSfxId : musicIntroSfxId;
         SoundManager.Instance?.PlaySound(loopId, true);
+        SoundManager.Instance?.StopSound(308);
 
         TaskList.Instance?.CompleteTask(400);
     }

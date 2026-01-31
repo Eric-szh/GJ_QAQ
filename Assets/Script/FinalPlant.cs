@@ -19,18 +19,25 @@ public class FinalPlant : EventInteract
 
     protected new void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject == playerCtrl.gameObject)
         {
             TaskList.Instance.CompleteTask(plantID);
+            if (TaskList.Instance.AllFinished())
+            {
+                playerCtrl.SetCurrentInteractable(this);
+            }
         }
+   
     }
 
     protected new void OnTriggerExit2D(Collider2D collision)
     {
-        base.OnTriggerExit2D(collision);
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject == playerCtrl.gameObject)
         {
+            if (TaskList.Instance.AllFinished())
+            {
+                playerCtrl.SetCurrentInteractable(null);
+            }
             TaskList.Instance.UnCompleteTask(plantID);
         }
     }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 381c17bfce77e6049a6d313a1450f73d
+guid: c0fb447178815ea499a72a3682604762
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -115329837532587103
-    second: rope-png-45176_0
+      213: -4337394063887962739
+    second: sprite_nose_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rope-png-45176_0
+      name: sprite_nose_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1abddd1bf14466ef0800000000000000
-      internalID: -115329837532587103
+      spriteID: d8de113541b7ec3c0800000000000000
+      internalID: -4337394063887962739
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 18a34f08787f40d4dadde0a345082be1
+    spriteID: 2cb1922c5f8812d4dab01706ef690f17
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rope-png-45176_0: -115329837532587103
+      sprite_nose_0: -4337394063887962739
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

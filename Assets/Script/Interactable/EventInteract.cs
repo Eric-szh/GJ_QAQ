@@ -7,6 +7,10 @@ public class EventInteract : MonoBehaviour, IInteractable
     [SerializeField] private bool invokeOnlyOnce = false;
     private bool hasBeenInvoked = false;
     [SerializeField] protected PlayerCtrller playerCtrl;
+
+    public Sprite hightlight;
+    private Sprite orignalSprite;
+
     protected void Reset()
     {
         playerCtrl = GameObject.FindWithTag("Player").GetComponent<PlayerCtrller>();
@@ -38,6 +42,16 @@ public class EventInteract : MonoBehaviour, IInteractable
         if (other.gameObject == playerCtrl.gameObject && !hasBeenInvoked)
         {
             playerCtrl.SetCurrentInteractable(this);
+            // if it have higlight, change sprite to hightlight
+            if (hightlight != null)
+            {
+                SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    orignalSprite = sr.sprite;
+                    sr.sprite = hightlight;
+                }
+            }
         }
     }
 
@@ -46,10 +60,19 @@ public class EventInteract : MonoBehaviour, IInteractable
         if (other.gameObject == playerCtrl.gameObject)
         {
             // check if this is the interactable
-            if (playerCtrl.currentInteractable == this)
+            if ((object)playerCtrl.currentInteractable == (object)this)
             {
                 playerCtrl.SetCurrentInteractable(null);
-            }
+                // if it have higlight, change sprite back to orignal
+                if (hightlight != null)
+                {
+                    SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                    if (sr != null && orignalSprite != null)
+                    {
+                        sr.sprite = orignalSprite;
+                    }
+                }
+        }
         }
     }
 }

@@ -24,7 +24,7 @@ public class Pickup : MonoBehaviour
         if (maskmodel == null)
             maskmodel = FindFirstObjectByType<PlayerMaskModel>(FindObjectsInactive.Include);
 
-        // 自动抓自己身上的 SpriteRenderer
+        // 锟皆讹拷抓锟皆硷拷锟斤拷锟较碉拷 SpriteRenderer
         sr = GetComponent<SpriteRenderer>();
     }
 

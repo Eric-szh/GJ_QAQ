@@ -14,6 +14,8 @@ public class CatCtrller : MonoBehaviour
     public void WhenAtTarget() { 
         isMoving = false;
         GetComponent<AniController>().ChangeAnimationState("Cat_idle");
+        // flip x 
+        GetComponent<SpriteRenderer>().flipX = true;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

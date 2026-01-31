@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BubbleAppear : MonoBehaviour
@@ -8,11 +10,15 @@ public class BubbleAppear : MonoBehaviour
     // Cached SpriteRenderer on this GameObject
     private SpriteRenderer _spriteRenderer;
     private Vector3 _baseLocalScale;
+    private List<BubbleAppear> otherBubbles;
 
     private void Awake()
     {
         _baseLocalScale = transform.localScale;
         _baseLocalScale.x = Mathf.Abs(_baseLocalScale.x);
+
+        // find all other BubbleAppear in the scene
+        otherBubbles = new List<BubbleAppear>(FindObjectsByType<BubbleAppear>(FindObjectsSortMode.None));
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -65,6 +71,15 @@ public class BubbleAppear : MonoBehaviour
         // Restart any existing disappearance timer and schedule a new one
         CancelInvoke(nameof(Disappear));
         Invoke(nameof(Disappear), (float)timeToDisappear);
+
+        // disable all other bubble
+        foreach (var bubble in otherBubbles)
+        {
+            if (bubble != this)
+            {
+                bubble.Disappear();
+            }
+        }
     }
 
     private void Disappear()

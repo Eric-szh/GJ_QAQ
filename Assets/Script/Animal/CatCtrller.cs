@@ -13,7 +13,7 @@ public class CatCtrller : MonoBehaviour
 
     public void WhenAtTarget() { 
         isMoving = false;
-        GetComponent<AniController>().ChangeAnimationState("Cat_idle");
+        GetComponent<AniController>().ChangeAnimationState("Cat_back");
         // flip x 
         GetComponent<SpriteRenderer>().flipX = true;
     }

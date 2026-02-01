@@ -32,6 +32,7 @@ public class SteveA : MonoBehaviour
 
     private int seq = 0;
 
+    [SerializeField] private SpriteRenderer highlightRenderer;
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -136,4 +137,28 @@ public class SteveA : MonoBehaviour
         if (anim == null) return;
         anim.SetBool(playingParam, v);
     }
+
+     // 在Inspector里拖：要被打开的那个SpriteRenderer
+
+    protected void OnTriggerEnter2D(Collider2D other)
+    {
+        
+
+           
+            if (highlightRenderer != null)
+                highlightRenderer.enabled = true;
+        
+    }
+
+    protected void OnTriggerExit2D(Collider2D other)
+    {
+       
+            if (highlightRenderer != null)
+                highlightRenderer.enabled = false;
+
+            // 如果你有这类逻辑也可以保留/按你的结构处理
+  
+        
+    }
+
 }

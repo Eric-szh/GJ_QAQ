@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: With enough                           in the room, I finally got noiticed!
+  m_text: With enough                           in the room, I finally got noticed!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
   m_sharedMaterial: {fileID: -7954060481752786948, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
@@ -753,8 +753,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2168}
-  m_SizeDelta: {x: 2000, y: 3265.5571}
+  m_AnchoredPosition: {x: 0, y: -1392.0709}
+  m_SizeDelta: {x: 2000, y: 1713.6992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &686400749
 MonoBehaviour:
@@ -848,8 +848,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -935,7 +935,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -4167.4}
+  m_AnchoredPosition: {x: 0, y: -2615.6}
   m_SizeDelta: {x: 549.9897, y: 733.3196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &860698829

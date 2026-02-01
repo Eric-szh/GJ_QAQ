@@ -1361,6 +1361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 137407778}
   - component: {fileID: 137407779}
+  - component: {fileID: 137407780}
   m_Layer: 0
   m_Name: Smell
   m_TagString: Untagged
@@ -1377,7 +1378,7 @@ Transform:
   m_GameObject: {fileID: 137407777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.15, y: -0.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1398,6 +1399,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmellIndicator
   PlayerMaskModel: {fileID: 135026280}
   smellEffect: {fileID: 1478246313}
+--- !u!212 &137407780
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137407777}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 20
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: cd487536a27b7d84c920324f86293c71, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.039215688}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5, y: 5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &147986427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,7 +4200,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6325,7 +6385,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 7
+  m_SortingOrder: 8
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4840251931394411004, guid: 834d03803580ab64f82b66fd1c7165c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9320,7 +9380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1752823819312291218, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_SortingOrder
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalScale.x
@@ -11037,7 +11097,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11431,7 +11491,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -12615,7 +12675,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Uh oh, my hands are too <color=#c19a83> big </color> for picking locks
+  m_text: 'Uh oh, my hands are too  big for <color=#c19a83> picking locks </color> '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
   m_sharedMaterial: {fileID: -7954060481752786948, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
@@ -14107,7 +14167,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: If only I am invisible
+  m_text: I guess sometimes it's better to stay <color=#c19a83>unnoticed</color>
+    ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
   m_sharedMaterial: {fileID: -7954060481752786948, guid: 8684649f8f7a8fa419930858b47b6f5c, type: 2}
@@ -14292,7 +14353,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!1 &1431428029
 GameObject:
@@ -14986,11 +15047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.13000011
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.85
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15537,11 +15598,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.82
+      value: 2.36
       objectReference: {fileID: 0}
     - target: {fileID: 2725066134525994361, guid: b50007e7ec736ae4aa9666c6c3fd1dbd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16411,7 +16472,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -16487,7 +16548,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9dbfed464045a194794eb319a6502c9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -17616,6 +17677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1750254018}
   - component: {fileID: 1750254019}
+  - component: {fileID: 1750254020}
   m_Layer: 0
   m_Name: Smell
   m_TagString: Untagged
@@ -17632,7 +17694,7 @@ Transform:
   m_GameObject: {fileID: 1750254017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.05, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17653,6 +17715,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmellIndicator
   PlayerMaskModel: {fileID: 135026280}
   smellEffect: {fileID: 1525041452}
+--- !u!212 &1750254020
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750254017}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 20
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: d086be2b6893d6f46b73bc23bed95dfe, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.32156864}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.47, y: 0.36}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &1750789808
 GameObject:
   m_ObjectHideFlags: 0
@@ -18675,8 +18796,8 @@ Camera:
   m_GameObject: {fileID: 1839912988}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5254902, g: 0.30980393, b: 0.19215688, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -18894,7 +19015,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!1 &1874505893
 GameObject:
@@ -19079,7 +19200,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 11
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -19336,7 +19457,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -19954,6 +20075,7 @@ MonoBehaviour:
   - {fileID: 1062211190}
   - {fileID: 857801866}
   - {fileID: 931815712}
+  - {fileID: 791725614}
 --- !u!1001 &1912284763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21445,7 +21567,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9f52105e96b5d0f4da6c842ea34322b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

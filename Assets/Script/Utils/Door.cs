@@ -8,6 +8,9 @@ public class Door : MonoBehaviour
     public int wrongSoundID;
     public BubbleAppear bubble;
 
+    [SerializeField] private SpriteRenderer selfRenderer;      
+    [SerializeField] private SpriteRenderer otherRenderer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,7 +25,12 @@ public class Door : MonoBehaviour
 
     public void Right()
     {
-        GetComponent<SpriteRenderer>().sprite = openSprite;
-        onOpen.Invoke();
+        if (selfRenderer == null) selfRenderer = GetComponent<SpriteRenderer>();
+
+        if (selfRenderer != null) selfRenderer.enabled = false;  // 关自己
+
+        if (otherRenderer != null) otherRenderer.enabled = true; // 开另一个
+
+        onOpen?.Invoke();
     }
 }

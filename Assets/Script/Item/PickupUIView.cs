@@ -31,13 +31,13 @@ public class PickupUIView : MonoBehaviour
     {
         if (panelRoot == null || !panelRoot.activeSelf) return;
 
-        // 等待一小段时间再允许关闭（避免刚显示就被触发键关闭）
-        if (Time.unscaledTime - _shownTime < ignoreInputSeconds) return;
+        //// 等待一小段时间再允许关闭（避免刚显示就被触发键关闭）
+        //if (Time.unscaledTime - _shownTime < ignoreInputSeconds) return;
 
-        if (AnyInputPressedThisFrame())
-        {
-            panelRoot.SetActive(false);
-        }
+        //if (AnyInputPressedThisFrame())
+        //{
+        //    panelRoot.SetActive(false);
+        //}
     }
 
     // updateView(sprite img, str title, str description)

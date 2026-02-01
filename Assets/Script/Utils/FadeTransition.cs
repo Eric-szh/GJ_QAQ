@@ -9,6 +9,7 @@ public class FadeTransition : MonoBehaviour
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private Image fadeImage; 
     [SerializeField] private bool FadeInOnStart = true;
+    public UnityEngine.Events.UnityEvent OnFadeOutComplete;
 
     private void Start()
     {
@@ -44,7 +45,16 @@ public class FadeTransition : MonoBehaviour
         Debug.Log("Fade Out Started");
         yield return FadeOutCoroutine();
         // After fade-out is complete, load the specified scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        if (sceneName != "None")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            OnFadeOutComplete?.Invoke();
+        }
+
+
     }
 
     private IEnumerator FadeOutCoroutine()

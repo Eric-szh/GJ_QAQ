@@ -83,3 +83,4 @@ mono_crash.*
 /Assets/_Recovery
 Assets/_Recovery.meta
 *.rar
+*.zip

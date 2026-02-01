@@ -59,7 +59,7 @@ public class SoundManager : MonoBehaviour
         BuildSoundDict();
         PrewarmPool(prewarmSources);
 
-        PlaySound(308, true, null, false);
+        PlaySound(308, true, null, false,0.3f);
     }
 
     private void BuildSoundDict()
@@ -130,13 +130,21 @@ public class SoundManager : MonoBehaviour
     // - restartIfAlreadyPlaying = true  => replay (default)
     // - restartIfAlreadyPlaying = false => do nothing
     // NEW: optional onCompleted callback invoked ONLY when non-looping sound finishes naturally.
-    public void PlaySound(int id, bool loop, Action onCompleted = null, bool restartIfAlreadyPlaying = true)
+    public void PlaySound(
+        int id,
+        bool loop,
+        Action onCompleted = null,
+        bool restartIfAlreadyPlaying = true,
+        float? volume = null
+    )
     {
         if (!soundDict.TryGetValue(id, out var clip) || clip == null)
         {
             Debug.LogWarning($"SoundManager: No clip found for id={id}");
             return;
         }
+
+        float vol = Mathf.Clamp01(volume ?? defaultVolume);
 
         // Same id already playing
         if (playingDict.TryGetValue(id, out var existing) && existing != null && existing.source != null)
@@ -146,10 +154,11 @@ public class SoundManager : MonoBehaviour
 
             existing.looping = loop;
             existing.paused = false;
-            existing.onCompleted = onCompleted; // NEW: update callback for this play
+            existing.onCompleted = onCompleted;
 
             existing.source.loop = loop;
             existing.source.clip = clip;
+            existing.source.volume = vol;
 
             existing.source.Stop();
             existing.source.Play();
@@ -160,7 +169,7 @@ public class SoundManager : MonoBehaviour
         var src = GetFreeSource();
         src.clip = clip;
         src.loop = loop;
-        src.volume = defaultVolume;
+        src.volume = vol;
         if (outputMixer != null) src.outputAudioMixerGroup = outputMixer;
 
         src.Play();
@@ -171,7 +180,7 @@ public class SoundManager : MonoBehaviour
             source = src,
             looping = loop,
             paused = false,
-            onCompleted = onCompleted // NEW: store callback
+            onCompleted = onCompleted
         };
     }
 

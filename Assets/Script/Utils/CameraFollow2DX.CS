@@ -17,7 +17,7 @@ public class CameraFollowClampX : MonoBehaviour
 
 
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (!target) return;
 

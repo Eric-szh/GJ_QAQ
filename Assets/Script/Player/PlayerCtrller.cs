@@ -29,6 +29,8 @@ public class PlayerCtrller : MonoBehaviour
 
     public PlayerMaskModel _playerMaskModel;
 
+    private bool showe;
+
     private void Reset()
     {
         _playerMaskModel = FindFirstObjectByType<PlayerMaskModel>();
@@ -102,7 +104,7 @@ public class PlayerCtrller : MonoBehaviour
 
 
         // Show or hide the E prompt based on whether there is a current interactable
-        if (currentInteractable != null)
+        if (currentInteractable != null && showe)
         {
             E?.SetActive(true);
         }
@@ -120,9 +122,10 @@ public class PlayerCtrller : MonoBehaviour
         rb.MovePosition(targetPos);
     }
 
-    public void SetCurrentInteractable(IInteractable interactable)
+    public void SetCurrentInteractable(IInteractable interactable, bool showE = true)
     {
         currentInteractable = interactable;
+        showe = showE;
         Debug.Log("Set current interactable to " + (interactable != null ? interactable.ToString() : "null"));
 
     }

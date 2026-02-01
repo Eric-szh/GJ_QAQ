@@ -1,9 +1,12 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FinalPlant : EventInteract
 {
     public int plantID;
     public PlayerMaskModel playerMaskModel;
+    public List<GameObject> destroyList;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,10 +54,12 @@ public class FinalPlant : EventInteract
             playerMaskModel.loseItem(202);
             playerCtrl.FreezeAction();
             playerCtrl.Juggle();
-            Debug.Log("All tasks finished! You win!");
+            foreach (var obj in destroyList)
+            {
+                obj.SetActive(false);
+            }
             return true;
         }
-        Debug.Log("FinalPlant interacted");
         return false;
 
     }

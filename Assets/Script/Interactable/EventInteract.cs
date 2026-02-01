@@ -7,9 +7,10 @@ public class EventInteract : MonoBehaviour, IInteractable
     [SerializeField] private bool invokeOnlyOnce = false;
     private bool hasBeenInvoked = false;
     [SerializeField] protected PlayerCtrller playerCtrl;
-
+    [SerializeField] private bool ShowE = true;
     public Sprite hightlight;
     private Sprite orignalSprite;
+
 
     protected void Reset()
     {
@@ -45,7 +46,7 @@ public class EventInteract : MonoBehaviour, IInteractable
             {
                 return;
             }
-            playerCtrl.SetCurrentInteractable(this);
+            playerCtrl.SetCurrentInteractable(this, ShowE);
             // if it have higlight, change sprite to hightlight
             if (hightlight != null)
             {

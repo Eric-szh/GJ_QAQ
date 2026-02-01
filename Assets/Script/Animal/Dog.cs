@@ -13,6 +13,8 @@ public class Dog : MonoBehaviour
     [Tooltip("The ID for the looping bark sound (starts with 30x)")]
     public int barkSoundId = 300; // Example ID
 
+    [SerializeField] BubbleAppear bubble;
+
     private void Reset()
     {
         // Fix: Using FindFirstObjectByType with Inactive.Include is safer
@@ -56,7 +58,8 @@ public class Dog : MonoBehaviour
                     SoundManager.Instance.PlaySound(barkSoundId, true);
                 }
 
-               
+                bubble.Appear();
+
                 if (childWall != null)
                 {
                     childWall.SetActive(true);

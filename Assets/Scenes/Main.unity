@@ -251,8 +251,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dog
   childWall: {fileID: 1124521463}
   playerMask: {fileID: 135026280}
-  barkSoundId: 313
   bubble: {fileID: 1878854992}
+  bubble2: {fileID: 1661834454}
+  barkSoundId: 313
+  pushDistance: 1.2
+  pushDuration: 0.12
+  pushCooldown: 0.35
+  safeMaskId: 0
 --- !u!61 &22322832
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13693,12 +13698,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1895672906}
   - {fileID: 1111795835}
   - {fileID: 1065306542}
   - {fileID: 1972482970}
   - {fileID: 410633317}
   - {fileID: 1661834453}
+  - {fileID: 1895672906}
   m_Father: {fileID: 135026281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

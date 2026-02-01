@@ -14,6 +14,8 @@ public class Pickup : MonoBehaviour
     
     [SerializeField] private Sprite fallbackIcon;
 
+    [SerializeField] private GameObject scentObject;
+
     private SpriteRenderer sr;
 
     void Reset()
@@ -55,6 +57,11 @@ public class Pickup : MonoBehaviour
         }
 
         Destroy(gameObject);
+        // if have scent object, destory it
+        if (scentObject != null)
+        {
+            Destroy(scentObject);
+        }
 
     }
 }

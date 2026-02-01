@@ -23,9 +23,6 @@ public class PlayerCtrller : MonoBehaviour
     public bool startFacingRight;
     public GameObject? E;
 
-    [Header("Mask Sound Settings")]
-    public int catHissSoundid;
-
     [Header("Animation Settings")]
     public string idleAnimationName = "None";
     public string walkAnimationName = "None";
@@ -138,12 +135,6 @@ public class PlayerCtrller : MonoBehaviour
     void OnInteract()
     {
         currentInteractable?.Interact(gameObject);
-        // check with maskplayermodel, see if wearing 100
-       if (_playerMaskModel.checkMaskOn(100))
-        {
-            // play hissing sound
-            SoundManager.Instance.PlaySound(catHissSoundid, false);
-        }
     }
 
     public void Juggle()

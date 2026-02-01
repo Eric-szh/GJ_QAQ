@@ -174,10 +174,10 @@ public class Dog : MonoBehaviour
         }
 
         if (bubble != null)
-            bubble.Appear();
+            bubble.Appear(false);
 
         if (bubble2 != null)
-            bubble2.Appear();
+            bubble2.Appear(false);
 
         if (childWall != null)
             childWall.SetActive(true);

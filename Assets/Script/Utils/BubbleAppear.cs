@@ -46,7 +46,7 @@ public class BubbleAppear : MonoBehaviour
     }
 
     // Show the bubble for timeToDisappear seconds
-    public void Appear()
+    public void Appear(bool disableOther=true)
     {
         if (_spriteRenderer == null)
         {
@@ -72,12 +72,13 @@ public class BubbleAppear : MonoBehaviour
         CancelInvoke(nameof(Disappear));
         Invoke(nameof(Disappear), (float)timeToDisappear);
 
-        // disable all other bubble
-        foreach (var bubble in otherBubbles)
+        if (disableOther)
         {
-            if (bubble != this)
+            // disable all other bubble
+            foreach (var bubble in otherBubbles)
             {
-                bubble.Disappear();
+                if (bubble != this)
+                    bubble.Disappear();
             }
         }
     }

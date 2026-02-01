@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 88b50de6a1a573d4988167ca2062651c
+guid: 590654d2f308a874d9141a99cc706afe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5425254776268346959
-    second: icon_plant_sml_0
+      213: -4026967904826811189
+    second: stevea_outline_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icon_plant_sml_0
+      name: stevea_outline_0
       rect:
         serializedVersion: 2
-        x: 228
-        y: 227
-        width: 44
-        height: 47
+        x: 25
+        y: 32
+        width: 154
+        height: 136
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f46577b89706a4b40800000000000000
-      internalID: 5425254776268346959
+      spriteID: bcc16eeb6065d18c0800000000000000
+      internalID: -4026967904826811189
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      icon_plant_sml_0: 5425254776268346959
+      stevea_outline_0: -4026967904826811189
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

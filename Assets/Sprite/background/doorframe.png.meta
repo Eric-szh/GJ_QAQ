@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 88b50de6a1a573d4988167ca2062651c
+guid: 834d03803580ab64f82b66fd1c7165c3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5425254776268346959
-    second: icon_plant_sml_0
+      213: 4840251931394411004
+    second: doorframe_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icon_plant_sml_0
+      name: doorframe_0
       rect:
         serializedVersion: 2
-        x: 228
-        y: 227
-        width: 44
-        height: 47
+        x: 0
+        y: 0
+        width: 151
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f46577b89706a4b40800000000000000
-      internalID: 5425254776268346959
+      spriteID: cf98922ac770c2340800000000000000
+      internalID: 4840251931394411004
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      icon_plant_sml_0: 5425254776268346959
+      doorframe_0: 4840251931394411004
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

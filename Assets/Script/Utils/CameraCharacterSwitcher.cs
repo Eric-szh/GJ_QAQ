@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraCharacterSwitcher : MonoBehaviour
@@ -32,27 +33,37 @@ public class CameraCharacterSwitcher : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        SwitchCamera(0); // Start with the first camera and character
+        StartCoroutine(SwitchCameraCoroutine(0, false));
     }
 
     public void SwitchCamera(int cameraIndex)
     {
+        StartCoroutine(SwitchCameraCoroutine(cameraIndex, true));
+    }
+
+    public IEnumerator SwitchCameraCoroutine(int cameraIndex, bool fade=true)
+    {
         if (cameras == null || cameras.Length == 0)
         {
             Debug.LogError("Cameras array is not assigned.");
-            return;
+            yield break;
         }
 
         if (characters == null || characters.Length == 0)
         {
             Debug.LogError("Characters array is not assigned.");
-            return;
+            yield break;
         }
 
         if (cameraIndex < 0 || cameraIndex >= cameras.Length)
         {
             Debug.LogError($"Invalid cameraIndex: {cameraIndex}. Valid range: 0..{cameras.Length - 1}");
-            return;
+            yield break;
+        }
+
+        if (fade)
+        {
+            yield return GetComponent<FadeTransition>().StartFadeOut("None");
         }
 
         for (int i = 0; i < cameras.Length; i++)
@@ -77,5 +88,12 @@ public class CameraCharacterSwitcher : MonoBehaviour
                 inventoryUI.SetActive(true);
             }
         }
+
+        if (fade)
+        {
+            yield return GetComponent<FadeTransition>().FadeIn();
+        }
+
+
     }
 }
